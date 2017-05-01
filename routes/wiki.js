@@ -41,9 +41,8 @@ router.post('/', function(req, res, next) {
 
 
     var page = Page.build({
-        title: req.body.user,
-        content: req.body.content,
-        urlTitle: req.body.title
+        title: req.body.title,
+        content: req.body.content
     });
 
     console.log("==================> Page object:")

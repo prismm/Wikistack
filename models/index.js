@@ -15,12 +15,14 @@ var db = new Sequelize('postgres://postgres:postgres@localhost:5432/wikistack', 
 //     }
 // }
 
+
+
 var Page = db.define('page', {
     title: {
         type: Sequelize.STRING(100),
         allowNull: false
     },
-    urlTitle: {
+    urltitle: {
         type: Sequelize.STRING,
         allowNull: false
     },
@@ -34,11 +36,11 @@ var Page = db.define('page', {
     }
 }, {
     getterMethods: {
-        route: function() { return `/wiki/${this.urlTitle}` }
+        route: function() { return `/wiki/${this.urltitle}` }
     },
     hooks: {
-        beforeUpdate: function() {
-            page.urlTitle = page.title.replace(/\s+/g, '_').replace(/\W/g, '');
+        beforeValidate: function(page) {
+            page.urltitle = page.title.replace(/\s+/g, 'xxx').replace(/\W/g, '');
         }
     }
 });
