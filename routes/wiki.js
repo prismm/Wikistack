@@ -9,10 +9,6 @@ var User = models.User;
 module.exports = router;
 
 router.get('/', function(req, res) {
-
-    // res.status(200)
-    // res.send("test");
-    // res.render('index');
     res.render('../views/wikipage');
 });
 
@@ -21,37 +17,16 @@ router.get('/add', function(req, res) {
 });
 
 router.get('/:title/edit', function(req, res) {
-
-    // res.status(200)
-    // res.send("test");
-    // res.render('index');
     res.render('../views/wikipage');
 });
 
-
-
-
-
 router.post('/', function(req, res, next) {
-
-    // STUDENT ASSIGNMENT:
-    // add definitions for `title` and `content`
-    console.log("==================> req.body")
-    console.dir(req.body);
-
-
     var page = Page.build({
         title: req.body.title,
         content: req.body.content
     });
-
-    console.log("==================> Page object:")
-    console.dir(page);
-
-    // STUDENT ASSIGNMENT:
-    // make sure we only redirect *after* our save is complete!
-    // note: `.save` returns a promise or it can take a callback.
+    // console.log("==================> Page object:")
+    // console.dir(page);
     page.save()
-        .then(res.redirect('/'));
-    // -> after save -> res.redirect('/');
+        .then(function(returnval) { res.json(returnval) });
 });

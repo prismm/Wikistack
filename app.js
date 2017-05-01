@@ -28,13 +28,12 @@ app.use(express.static(path.join(__dirname, '/public')));
 //use routes module to handle requests
 app.use('/', routes);
 
-
+//syncing db
 models.User.sync({ force: true })
     .then(function() {
         return models.Page.sync({})
     })
     .then(function() {
-        // make sure to replace the name below with your express app
         app.listen(1337, function() {
             console.log('Server is listening on port 1337!');
         });
