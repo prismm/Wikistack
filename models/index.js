@@ -7,7 +7,7 @@ var db = new Sequelize('postgres://postgres:postgres@localhost:5432/wikistack', 
 
 var Page = db.define('page', {
     title: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING(150),
         allowNull: false
     },
     urltitle: {
@@ -51,7 +51,10 @@ var User = db.define('user', {
     }
 });
 
+Page.belongsTo(User, { as: 'author' });
+
 module.exports = {
     Page: Page,
-    User: User
+    User: User,
+    db: db
 };

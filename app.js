@@ -10,11 +10,6 @@ var path = require('path');
 var fs = require('fs');
 var models = require('./models');
 
-//templating boilerplate setup
-var env = nunjucks.configure('views', { noCache: true });
-app.set('view engine', 'html');
-app.engine('html', nunjucks.render);
-
 //logging middleware
 app.use(morgan('combined'));
 
@@ -29,13 +24,15 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use('/', routes);
 
 //syncing db
-models.User.sync({ force: true })
-    .then(function() {
-        return models.Page.sync({})
-    })
+models.db.sync({ force: true })
     .then(function() {
         app.listen(1337, function() {
             console.log('Server is listening on port 1337!');
         });
     })
     .catch(console.error);
+
+//templating boilerplate setup
+app.set('view engine', 'html');
+app.engine('html', nunjucks.render);
+nunjucks.configure('views', { noCache: true });

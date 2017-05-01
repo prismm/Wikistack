@@ -3,7 +3,8 @@ var express = require('express');
 var router = express.Router();
 var wikiRouter = require('./wiki')
 var userRouter = require('./user')
-
+var models = require('../models');
+var Page = models.Page;
 module.exports = router;
 
 
@@ -13,7 +14,10 @@ module.exports = router;
 
 // });
 router.get('/', function(req, res) {
-    res.render('../views/index')
+    Page.findAll()
+        .then(result => res.render('../views/index', { wikipages: result }))
+
 })
+
 router.use('/wiki', wikiRouter);
 router.use('/users', userRouter);
